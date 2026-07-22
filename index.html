@@ -3,397 +3,292 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weekly Workout Dashboard</title>
+    <title>Weekly Workout</title>
+
     <style>
-      :root {
-        --bg: #0f172a;
-        --card: #111827;
-        --card2: #1e293b;
-        --text: #e5e7eb;
-        --muted: #94a3b8;
-        --accent: #8b5cf6;
-        --accent2: #06b6d4;
-        --green: #22c55e;
-        --orange: #f97316;
-        --pink: #ec4899;
-      }
       * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
       }
       body {
-        margin: 0;
-        font-family: Inter, Arial, sans-serif;
-        background: linear-gradient(135deg, #0f172a, #1e1b4b, #111827);
-        color: var(--text);
-        padding: 24px;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #6c63ff, #00c9ff);
+        min-height: 100vh;
+        padding: 30px;
+        color: #333;
       }
       .container {
         max-width: 1100px;
         margin: auto;
       }
-      .header {
-        background: linear-gradient(135deg, var(--accent), var(--accent2));
-        border-radius: 28px;
-        padding: 28px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-        margin-bottom: 24px;
-      }
-      .header h1 {
-        margin: 0;
-        font-size: 2.2rem;
-      }
-      .header p {
-        margin: 8px 0 0;
-        color: #f8fafc;
-      }
-      .topbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 16px;
-        flex-wrap: wrap;
-      }
-      .toggle {
-        display: flex;
-        background: rgba(255, 255, 255, 0.18);
-        padding: 6px;
-        border-radius: 999px;
-      }
-      .toggle button {
-        border: none;
-        background: transparent;
-        color: white;
-        padding: 10px 18px;
-        border-radius: 999px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-      .toggle button.active {
+      header {
         background: white;
-        color: #111827;
+        border-radius: 20px;
+        padding: 25px;
+        text-align: center;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       }
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 16px;
-        margin: 24px 0;
+      header h1 {
+        color: #6c63ff;
       }
-      .stat {
-        background: rgba(255, 255, 255, 0.12);
-        border-radius: 22px;
-        padding: 20px;
-        backdrop-filter: blur(8px);
+      .buttons {
+        text-align: center;
+        margin-bottom: 25px;
       }
-      .stat small {
-        color: #e0f2fe;
+      button {
+        border: none;
+        padding: 12px 24px;
+        margin: 5px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 15px;
+        color: white;
+        background: #6c63ff;
       }
-      .stat h2 {
-        margin: 8px 0 0;
-        font-size: 2rem;
+      button:hover {
+        background: #5848e5;
+      }
+      .plan {
+        display: none;
+      }
+      .active {
+        display: block;
       }
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
       }
-      .day {
-        background: rgba(17, 24, 39, 0.92);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 24px;
+      .card {
+        background: white;
+        border-radius: 18px;
         padding: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
       }
-      .day h3 {
-        margin: 0 0 6px;
-        font-size: 1.2rem;
+      .youtube {
+        background: white;
+        border-radius: 18px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
       }
-      .day .focus {
-        color: var(--muted);
-        margin-bottom: 16px;
+      .running {
+        background: white;
+        border-radius: 18px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
       }
-      .day ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+      .card h2 {
+        color: #6c63ff;
+        margin-bottom: 15px;
       }
-      .day li {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      .card label {
+        display: block;
+        margin: 8px 0;
       }
-      .day li:last-child {
-        border-bottom: none;
+      .youtube h2 {
+        color: #6c63ff;
+        margin-bottom: 15px;
       }
-      input[type="checkbox"] {
-        width: 20px;
-        height: 20px;
-        accent-color: var(--green);
+      .youtube label {
+        display: block;
+        margin: 8px 0;
       }
-      .badge {
-        display: inline-block;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        margin-bottom: 12px;
+      .running h2 {
+        color: #6c63ff;
+        margin-bottom: 15px;
       }
-      .upper {
-        background: rgba(139, 92, 246, 0.2);
-        color: #ddd6fe;
+      .running label {
+        display: block;
+        margin: 8px 0;
       }
-      .lower {
-        background: rgba(6, 182, 212, 0.2);
-        color: #cffafe;
-      }
-      .run {
-        background: rgba(34, 197, 94, 0.2);
-        color: #bbf7d0;
-      }
-      .rest {
-        background: rgba(249, 115, 22, 0.2);
-        color: #fed7aa;
-      }
-      .footer {
+      footer {
         text-align: center;
-        color: var(--muted);
-        margin-top: 28px;
-      }
-      .hidden {
-        display: none;
-      }
-      @media (max-width: 700px) {
-        body {
-          padding: 16px;
-        }
-        .header h1 {
-          font-size: 1.8rem;
-        }
+        margin-top: 30px;
+        color: white;
       }
     </style>
   </head>
+
   <body>
     <div class="container">
-      <div class="header">
-        <div class="topbar">
-          <div>
-            <h1>Weekly Workout Dashboard</h1>
-            <p>
-              Choose your weekly plan and check off each exercise during your
-              session.
-            </p>
-          </div>
-          <div class="toggle">
-            <button id="btn4" class="active">4-Day Plan</button>
-            <button id="btn5">5-Day Plan</button>
-          </div>
-        </div>
+      <header>
+        <h1>🏋 Weekly Workout Dashboard 🏃‍♂️</h1>
+        <p>Workout Planner for a Healthier You</p>
+      </header>
 
-        <div class="stats">
-          <div class="stat">
-            <small>Selected Plan</small>
-            <h2 id="planLabel">4 Days</h2>
+      <div class="buttons">
+        <button onclick="showPlan('plan4')">4-Day Plan</button>
+        <button onclick="showPlan('plan5')">5-Day Plan</button>
+      </div>
+
+      <!-- 4 DAY -->
+      <div id="plan4" class="plan active">
+        <div class="grid">
+          <div class="card">
+            <h2>🔵 Monday</h2>
+            <p><b>Upper A</b></p>
+            <label><input type="checkbox" /> Bench Press</label>
+            <label><input type="checkbox" /> Pull Ups</label>
+            <label><input type="checkbox" /> Incline DB Press</label>
+            <label><input type="checkbox" /> Shoulder Press</label>
+            <label><input type="checkbox" /> Lateral Raise</label>
           </div>
-          <div class="stat">
-            <small>Training Days</small>
-            <h2 id="daysLabel">Mon • Tue • Thu • Fri</h2>
+
+          <div class="card">
+            <h2>🟢 Tuesday</h2>
+            <p><b>Lower A</b></p>
+            <label><input type="checkbox" /> Squats</label>
+            <label><input type="checkbox" /> Romanian Deadlift</label>
+            <label><input type="checkbox" /> Leg Curl</label>
+            <label><input type="checkbox" /> Calf Raises</label>
+            <label><input type="checkbox" /> Hanging Leg Raise</label>
           </div>
-          <div class="stat">
-            <small>Focus</small>
-            <h2>Physique</h2>
+
+          <div class="card">
+            <h2>🟠 Thursday</h2>
+            <p><b>Upper B</b></p>
+            <label><input type="checkbox" /> Incline Bench</label>
+            <label><input type="checkbox" /> Rows</label>
+            <label><input type="checkbox" /> Pull Ups</label>
+            <label><input type="checkbox" /> Rear Delts</label>
+            <label><input type="checkbox" /> EZ Curl</label>
+          </div>
+
+          <div class="card">
+            <h2>🔴 Friday</h2>
+            <p><b>Lower B</b></p>
+            <label><input type="checkbox" /> Deadlift</label>
+            <label><input type="checkbox" /> Front Squat</label>
+            <label><input type="checkbox" /> Lunges</label>
+            <label><input type="checkbox" /> Leg Extension</label>
+            <label><input type="checkbox" /> Ab Wheel</label>
           </div>
         </div>
       </div>
 
-      <div id="plan4" class="grid">
-        <div class="day">
-          <span class="badge upper">Monday</span>
-          <h3>Upper A</h3>
-          <div class="focus">Chest • Back • Shoulders</div>
-          <ul>
-            <li><input type="checkbox" /> Bench Press</li>
-            <li><input type="checkbox" /> Pull-ups / Lat Pulldown</li>
-            <li><input type="checkbox" /> Incline Dumbbell Press</li>
-            <li><input type="checkbox" /> Barbell Row</li>
-            <li><input type="checkbox" /> Shoulder Press</li>
-            <li><input type="checkbox" /> Lateral Raise</li>
-          </ul>
-        </div>
+      <!-- 5 DAY -->
+      <div id="plan5" class="plan">
+        <div class="grid">
+          <div class="card">
+            <h2>🔴 Monday</h2>
+            <p><b>Push</b></p>
+            <label><input type="checkbox" /> Bench Press</label>
+            <label><input type="checkbox" /> Incline Press</label>
+            <label><input type="checkbox" /> Shoulder Press</label>
+            <label><input type="checkbox" /> Triceps</label>
+          </div>
 
-        <div class="day">
-          <span class="badge lower">Tuesday</span>
-          <h3>Lower A</h3>
-          <div class="focus">Quads • Hamstrings • Core</div>
-          <ul>
-            <li><input type="checkbox" /> Back Squat</li>
-            <li><input type="checkbox" /> Romanian Deadlift</li>
-            <li><input type="checkbox" /> Bulgarian Split Squat</li>
-            <li><input type="checkbox" /> Leg Curl</li>
-            <li><input type="checkbox" /> Calf Raise</li>
-            <li><input type="checkbox" /> Hanging Leg Raise</li>
-          </ul>
-        </div>
+          <div class="card">
+            <h2>🔵 Tuesday</h2>
+            <p><b>Pull</b></p>
+            <label><input type="checkbox" /> Pull Ups</label>
+            <label><input type="checkbox" /> Rows</label>
+            <label><input type="checkbox" /> Lat Pulldown</label>
+            <label><input type="checkbox" /> Biceps Curl</label>
+          </div>
 
-        <div class="day">
-          <span class="badge run">Wednesday</span>
-          <h3>Recovery / Running</h3>
-          <div class="focus">Easy cardio and mobility</div>
-          <ul>
-            <li><input type="checkbox" /> Easy Run (30–45 min)</li>
-            <li><input type="checkbox" /> Mobility</li>
-            <li><input type="checkbox" /> Stretching</li>
-          </ul>
-        </div>
+          <div class="card">
+            <h2>🟢 Wednesday</h2>
+            <p><b>Legs</b></p>
+            <label><input type="checkbox" /> Squat</label>
+            <label><input type="checkbox" /> Leg Press</label>
+            <label><input type="checkbox" /> Hamstring Curl</label>
+            <label><input type="checkbox" /> Calves</label>
+          </div>
 
-        <div class="day">
-          <span class="badge upper">Thursday</span>
-          <h3>Upper B</h3>
-          <div class="focus">Upper body hypertrophy</div>
-          <ul>
-            <li><input type="checkbox" /> Incline Bench Press</li>
-            <li><input type="checkbox" /> Chest Supported Row</li>
-            <li><input type="checkbox" /> Dips</li>
-            <li><input type="checkbox" /> Pull-ups</li>
-            <li><input type="checkbox" /> Rear Delt Fly</li>
-            <li><input type="checkbox" /> EZ Bar Curl</li>
-          </ul>
-        </div>
+          <div class="card">
+            <h2>🟣 Thursday</h2>
+            <p><b>Upper</b></p>
+            <label><input type="checkbox" /> Incline Bench</label>
+            <label><input type="checkbox" /> Row</label>
+            <label><input type="checkbox" /> Shoulder Press</label>
+            <label><input type="checkbox" /> Arms</label>
+          </div>
 
-        <div class="day">
-          <span class="badge lower">Friday</span>
-          <h3>Lower B</h3>
-          <div class="focus">Leg strength and core</div>
-          <ul>
-            <li><input type="checkbox" /> Deadlift</li>
-            <li><input type="checkbox" /> Front Squat</li>
-            <li><input type="checkbox" /> Walking Lunges</li>
-            <li><input type="checkbox" /> Leg Extension</li>
-            <li><input type="checkbox" /> Seated Leg Curl</li>
-            <li><input type="checkbox" /> Ab Wheel</li>
-          </ul>
-        </div>
-
-        <div class="day">
-          <span class="badge rest">Weekend</span>
-          <h3>Rest</h3>
-          <div class="focus">Recovery and optional mobility</div>
-          <ul>
-            <li><input type="checkbox" /> Walk</li>
-            <li><input type="checkbox" /> Stretch</li>
-            <li><input type="checkbox" /> Full Rest</li>
-          </ul>
+          <div class="card">
+            <h2>🟠 Friday</h2>
+            <p><b>Lower</b></p>
+            <label><input type="checkbox" /> Front Squat</label>
+            <label><input type="checkbox" /> Lunges</label>
+            <label><input type="checkbox" /> Leg Curl</label>
+            <label><input type="checkbox" /> Abs</label>
+          </div>
         </div>
       </div>
-
-      <div id="plan5" class="grid hidden">
-        <div class="day">
-          <span class="badge upper">Monday</span>
-          <h3>Push</h3>
-          <div class="focus">Chest • Shoulders • Triceps</div>
-          <ul>
-            <li><input type="checkbox" /> Bench Press</li>
-            <li><input type="checkbox" /> Incline DB Press</li>
-            <li><input type="checkbox" /> Shoulder Press</li>
-            <li><input type="checkbox" /> Lateral Raise</li>
-            <li><input type="checkbox" /> Triceps Pushdown</li>
-          </ul>
-        </div>
-
-        <div class="day">
-          <span class="badge upper">Tuesday</span>
-          <h3>Pull</h3>
-          <div class="focus">Back • Biceps</div>
-          <ul>
-            <li><input type="checkbox" /> Pull-ups</li>
-            <li><input type="checkbox" /> Barbell Row</li>
-            <li><input type="checkbox" /> Lat Pulldown</li>
-            <li><input type="checkbox" /> Seated Row</li>
-            <li><input type="checkbox" /> Bicep Curl</li>
-          </ul>
-        </div>
-
-        <div class="day">
-          <span class="badge lower">Wednesday</span>
-          <h3>Legs</h3>
-          <div class="focus">Quads • Hamstrings • Calves</div>
-          <ul>
-            <li><input type="checkbox" /> Squat</li>
-            <li><input type="checkbox" /> Romanian Deadlift</li>
-            <li><input type="checkbox" /> Leg Press</li>
-            <li><input type="checkbox" /> Leg Curl</li>
-            <li><input type="checkbox" /> Calf Raise</li>
-          </ul>
-        </div>
-
-        <div class="day">
-          <span class="badge upper">Thursday</span>
-          <h3>Upper</h3>
-          <div class="focus">Chest • Back • Shoulders</div>
-          <ul>
-            <li><input type="checkbox" /> Incline Bench</li>
-            <li><input type="checkbox" /> Chest Supported Row</li>
-            <li><input type="checkbox" /> Pull-ups</li>
-            <li><input type="checkbox" /> Lateral Raise</li>
-            <li><input type="checkbox" /> Rear Delt Fly</li>
-          </ul>
-        </div>
-
-        <div class="day">
-          <span class="badge lower">Friday</span>
-          <h3>Lower</h3>
-          <div class="focus">Legs • Core</div>
-          <ul>
-            <li><input type="checkbox" /> Deadlift</li>
-            <li><input type="checkbox" /> Front Squat</li>
-            <li><input type="checkbox" /> Walking Lunges</li>
-            <li><input type="checkbox" /> Leg Extension</li>
-            <li><input type="checkbox" /> Ab Wheel</li>
-          </ul>
-        </div>
-
-        <div class="day">
-          <span class="badge rest">Weekend</span>
-          <h3>Rest</h3>
-          <div class="focus">Recovery</div>
-          <ul>
-            <li><input type="checkbox" /> Walk</li>
-            <li><input type="checkbox" /> Stretch</li>
-          </ul>
-        </div>
+      <div class="running">
+        <h2>👟 Running Schedules</h2>
+        <label><input type="checkbox" /> 🧘🏻‍♀️ MONDAY: REST</label>
+        <label><input type="checkbox" /> 🏃‍♂️ TUESDAY: INTERVALS</label>
+        <label><input type="checkbox" /> 😎 WEDNESDAY: EASY RUN</label>
+        <label><input type="checkbox" /> 😩 THURSDAY: TEMPO WORKOUT</label>
+        <label><input type="checkbox" /> 😎 FRIDAY: EASY RUN</label>
+        <label><input type="checkbox" /> 🏃‍♂️ SATURDAY: INTERVALS</label>
+        <label><input type="checkbox" /> ᯓ🏃🏻‍♀️‍➡️ SUNDAY: LSD</label>
+      </div>
+      <div class="youtube">
+        <h2>▶️ Youtube Resources for Running Workouts</h2>
+        <label
+          ><input type="checkbox" />10 Explosive Speed Exercises:
+          <a href="https://youtu.be/FYJJbwG_i8U?si=vWXuxQoG655nd5Op">
+            https://youtu.be/FYJJbwG_i8U?si=vWXuxQoG655nd5Op</a
+          ></label
+        >
+        <label
+          ><input type="checkbox" /> Ladder Exercises:
+          <a href="https://youtube.com/shorts/AtLK1nAw6lU?si=cy-PvF0Aay5ykewb"
+            >https://youtube.com/shorts/AtLK1nAw6lU?si=cy-PvF0Aay5ykewb</a
+          ></label
+        >
+        <label><input type="checkbox" /> Leg Curl</label>
+        <label><input type="checkbox" /> Abs</label>
       </div>
 
-      <div class="footer">
-        Static weekly workout dashboard • save as
-        <strong>index.html</strong> and open in your browser.
+      <div class="youtube">
+        <h2>8 plyometric exercises for runners 🏋️‍♂️</h2>
+        <label><input type="checkbox" /> Single Leg Hops 3x30secs</label>
+        <label
+          ><input type="checkbox" /> Single Leg Knee Drive 3x12reps (each
+          leg)</label
+        >
+        <label><input type="checkbox" /> Box Hops ON/OFF 3X20 reps</label>
+        <label><input type="checkbox" /> Lateral Box Hops 3x20 reps</label>
+        <label><input type="checkbox" /> Ski Jumps 3x15 reps</label>
+        <label
+          ><input type="checkbox" /> Straight Leg Jumps 3x10 reps (each
+          leg)</label
+        >
+        <label
+          ><input type="checkbox" /> Split Step Ups 20 reps (each leg) (each
+          leg)</label
+        >
+        <label
+          ><input type="checkbox" /> Depth Drop Box Jumps 3x10 reps (each
+          leg)</label
+        >
+        source:
+        <a
+          href="https://web.facebook.com/watch/?ref=saved&v=1376669253839167
+"
+          >https://web.facebook.com/watch/?ref=saved&v=1376669253839167</a
+        >
       </div>
+
+      <footer>
+        <p>💪 Train Consistently • Eat Well • Recover Well</p>
+      </footer>
     </div>
 
     <script>
-      const btn4 = document.getElementById("btn4");
-      const btn5 = document.getElementById("btn5");
-      const plan4 = document.getElementById("plan4");
-      const plan5 = document.getElementById("plan5");
-      const planLabel = document.getElementById("planLabel");
-      const daysLabel = document.getElementById("daysLabel");
-
-      btn4.onclick = () => {
-        btn4.classList.add("active");
-        btn5.classList.remove("active");
-        plan4.classList.remove("hidden");
-        plan5.classList.add("hidden");
-        planLabel.textContent = "4 Days";
-        daysLabel.textContent = "Mon • Tue • Thu • Fri";
-      };
-
-      btn5.onclick = () => {
-        btn5.classList.add("active");
-        btn4.classList.remove("active");
-        plan5.classList.remove("hidden");
-        plan4.classList.add("hidden");
-        planLabel.textContent = "5 Days";
-        daysLabel.textContent = "Mon • Tue • Wed • Thu • Fri";
-      };
+      function showPlan(id) {
+        document
+          .querySelectorAll(".plan")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+      }
     </script>
   </body>
 </html>
